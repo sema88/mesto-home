@@ -2,7 +2,9 @@
 
 Демонстрационный магазин интерьерных вещей в белой палитре: полки, искусственные цветы, керамика и текстиль.
 
-[Сайт в Sites](https://mesto-white-interior-kt.decentpig128.chatgpt.site)
+[Открыть сайт на GitHub Pages](https://sema88.github.io/mesto-home/)
+
+[Версия в Sites](https://mesto-white-interior-kt.decentpig128.chatgpt.site)
 
 ## Что работает
 
@@ -32,6 +34,8 @@ npm start
 - `scripts/serve.mjs` — локальный HTTP-сервер.
 
 Для размещения на статическом хостинге достаточно загрузить `index.html`, `style.css`, `app.js` и `assets/`. Сборка не требуется; пути к ресурсам относительные.
+
+GitHub Pages публикует корень ветки `main`. После новых коммитов сайт обновляется автоматически. Файл `.nojekyll` отключает обработку Jekyll.
 
 ## Изображения
 
