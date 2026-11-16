@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#fafaf8">
+  <title>место — вещи, с которыми дома</title>
+  <meta name="description" content="Светлая коллекция вещей для дома: полки, искусственные цветы, керамика и текстиль. Демонстрационный интерьерный магазин место.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f2f1ed'/%3E%3Ctext x='10' y='47' font-family='Georgia' font-size='48' fill='%232c352c'%3Eм%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
+</head>
+<body>
+  <div class="announcement">Маленькие детали. Большое чувство дома. <span>Коллекция тихого уюта →</span></div>
+  <header class="header">
+    <a href="#" class="logo" aria-label="место — главная">место<span>предметы для жизни</span></a>
+    <nav aria-label="Основная навигация"><a href="#catalog">Каталог</a><a href="#collection">Вдохновение</a><a href="#about">О нас</a></nav>
+    <div class="header-actions">
+      <button class="icon-button" id="search-open" aria-label="Поиск товаров"><svg><use href="#i-search"/></svg></button>
+      <button class="icon-button favorites-header" id="favorites-open" aria-label="Показать избранное"><svg><use href="#i-heart"/></svg><span id="fav-count" hidden>0</span></button>
+      <button class="bag-button" id="cart-open" aria-label="Открыть корзину"><svg><use href="#i-bag"/></svg><span class="bag-label">Корзина</span><span class="cart-count">0</span></button>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-image" src="assets/hero.png" alt="Светлый интерьер с дубовыми полками, белой керамикой и веточками эвкалипта" fetchpriority="high">
+      <div class="hero-copy"><p class="eyebrow"><span></span> ВЕЩИ, КОТОРЫЕ ОСТАЮТСЯ</p><h1 id="hero-title">Уют начинается<br>с <em>простых вещей.</em></h1><p class="hero-description">Полка для любимых книг. Цветы без повода.<br>Детали, с которыми пространство становится домом.</p><a class="button dark" href="#catalog">Найти своё <span>↗</span></a><div class="hero-bottom"><span class="small-line"></span> Меньше лишнего. Больше вашего.</div></div>
+      <a class="hero-caption" href="#collection"><span>НАСТРОЕНИЕ КОЛЛЕКЦИИ</span>Тихое утро <svg><use href="#i-arrow"/></svg></a>
+    </section>
+    <section class="intro strip"><p>Дом — это не место.<br><span>Это то, что вы чувствуете.</span></p><div>Мы собрали вещи, которые легко подружить между собой.<br>Природные оттенки, приятные фактуры и ничего лишнего.</div><span class="hand-star" aria-hidden="true">✳</span></section>
+    <section class="catalog section" id="catalog" aria-labelledby="catalog-title">
+      <div class="section-heading"><div><p class="eyebrow">ВАШИ НОВЫЕ ЛЮБИМЫЕ ВЕЩИ</p><h2 id="catalog-title">На своём месте</h2></div><p class="section-note">Создайте уют, который<br>будет похож на вас.</p></div>
+      <div class="catalog-bar"><div class="filters" role="group" aria-label="Категории товаров"><button class="filter active" data-filter="all" aria-pressed="true">Всё <span>08</span></button><button class="filter" data-filter="shelves" aria-pressed="false">Полки</button><button class="filter" data-filter="flowers" aria-pressed="false">Цветы и зелень</button><button class="filter" data-filter="decor" aria-pressed="false">Декор</button><button class="filter" data-filter="textile" aria-pressed="false">Текстиль</button></div><label class="sort-label"><span class="sr-only">Сортировка</span><select id="sort"><option value="default">Наш выбор</option><option value="price-asc">Сначала дешевле</option><option value="price-desc">Сначала дороже</option><option value="name">По названию</option></select><span>⌄</span></label></div>
+      <div class="search-row" id="search-row" hidden><svg><use href="#i-search"/></svg><input id="search" type="search" placeholder="Найти полку, вазу или что-то для души…" aria-label="Поиск по каталогу"><button id="search-close" aria-label="Закрыть поиск">✕</button></div>
+      <div class="result-status" id="result-status" hidden></div><div class="product-grid" id="products"></div><p class="catalog-footnote">Подобрано с вниманием к деталям <span>✳</span> Сочетается с вашим домом</p>
+    </section>
+    <section class="collection section" id="collection" aria-labelledby="collection-title"><div class="collection-image"><img src="assets/hero.png" alt="Белая керамика и зелень на полках из светлого дерева" loading="lazy"><span class="image-label">THE SOFT LIVING EDIT / 01</span><button class="product-hotspot" data-product="0" aria-label="Подробнее о дубовой полке">+</button></div><div class="collection-copy"><p class="eyebrow">СОБРАНО В ОДНО НАСТРОЕНИЕ</p><h2 id="collection-title">Больше воздуха.<br>Больше <em>дома.</em></h2><p>Белая керамика, тёплое дерево и немного зелени. Начните с одной детали — и дайте остальным найти своё место.</p><div class="swatches" aria-label="Палитра коллекции"><span style="background:#fff" title="Белый"></span><span style="background:#eeeae3" title="Молочный"></span><span style="background:#c3ac8e" title="Натуральное дерево"></span><span style="background:#a2aa95" title="Шалфей"></span><small>В гармонии друг с другом</small></div><button class="text-link" id="collection-shop">Собрать это настроение <span>↗</span></button></div></section>
+    <section class="philosophy section" id="about"><p class="eyebrow">ФИЛОСОФИЯ МЕСТА</p><h2>Не идеальный интерьер.<br><em>Просто ваш.</em></h2><p>Мы верим, что дому не нужно быть похожим на картинку.<br>Достаточно вещей, к которым хочется прикоснуться,<br>и деталей, которые хочется оставить.</p><div class="values"><div><svg><use href="#i-sun"/></svg><h3>Легко сочетать</h3><p>Спокойная палитра,<br>в которой всё на своём месте.</p></div><div><svg><use href="#i-leaf"/></svg><h3>Приятно жить</h3><p>Фактуры, формы и детали<br>для маленьких ежедневных радостей.</p></div><div><svg><use href="#i-home"/></svg><h3>Можно быть собой</h3><p>Ваш дом, ваши привычки,<br>ваш собственный ритм.</p></div></div></section>
+  </main>
+  <footer><div class="footer-top"><a href="#" class="logo">место<span>предметы для жизни</span></a><p>Для пространства,<br>в которое хочется возвращаться.</p><a href="#catalog" class="footer-catalog">Заглянуть в каталог ↗</a></div><div class="footer-bottom"><span>© 2026 место · Концепт интерьерного магазина</span><button id="demo-info">О демоверсии и фотографиях ↗</button><span>Сделано с чувством дома</span></div></footer>
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
+  <dialog class="cart-dialog" id="cart-dialog" aria-labelledby="cart-title"><div class="drawer-head"><div><p class="eyebrow">ВАШ МАЛЕНЬКИЙ УЮТ</p><h2 id="cart-title">Корзина <span id="drawer-count">0</span></h2></div><button class="close-button" data-close="cart-dialog" aria-label="Закрыть корзину">✕</button></div><div id="cart-items" class="cart-items"></div><div class="cart-summary" id="cart-summary"><div><span>Итого</span><strong id="cart-total">0 ₽</strong></div><p>Демонстрационная корзина. Доставка и оплата не подключены.</p><button class="button dark" id="checkout">Попробовать оформить <span>↗</span></button></div></dialog>
+  <dialog class="product-dialog" id="product-dialog" aria-label="Информация о товаре"><button class="close-button floating" data-close="product-dialog" aria-label="Закрыть карточку товара">✕</button><div id="product-detail"></div></dialog>
+  <dialog class="info-dialog" id="info-dialog" aria-labelledby="info-title"><button class="close-button floating" data-close="info-dialog" aria-label="Закрыть окно">✕</button><p class="eyebrow">ПРОСТРАНСТВО ДЛЯ ИДЕЙ</p><h2 id="info-title">Это демоверсия</h2><div id="info-content"></div><button class="button dark" data-close="info-dialog">Понятно <span>↗</span></button></dialog>
+  <svg class="icons" xmlns="http://www.w3.org/2000/svg"><symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.5 4.9c-2.1-2.2-5.6-1.8-8.5 1.4-2.9-3.2-6.4-3.6-8.5-1.4-3.2 3.4.3 8.4 8.5 14.7 8.2-6.3 11.7-11.3 8.5-14.7Z"/></symbol><symbol id="i-bag" viewBox="0 0 24 24"><path d="M4 7.5h16l1 13H3l1-13Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M5 5h14v14"/></symbol><symbol id="i-sun" viewBox="0 0 32 32"><circle cx="16" cy="16" r="6"/><path d="M16 1v5m0 20v5M1 16h5m20 0h5M5 5l4 4m14 14 4 4M5 27l4-4M23 9l4-4"/></symbol><symbol id="i-leaf" viewBox="0 0 32 32"><path d="M6 28 25 5C11 2 1 9 6 21c11 5 24-3 19-16M6 28l-3 3"/></symbol><symbol id="i-home" viewBox="0 0 32 32"><path d="m3 14 13-11 13 11M7 11v18h18V11M13 29V18h6v11"/></symbol></svg>
+</body>
+</html>
+
+
