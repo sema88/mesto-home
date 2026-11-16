@@ -24,6 +24,7 @@ function updateCounts(){const count=Object.values(cart).reduce((a,b)=>a+b,0);$('
 function toast(text){clearTimeout(toastTimer);$('#toast').textContent=text;$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),2600)}
 function renderProducts(){let list=products.filter(p=>(filter==='all'||p.category===filter)&&(!favoritesOnly||favorites.includes(p.id)));const query=$('#search').value.trim().toLocaleLowerCase('ru');if(query)list=list.filter(p=>(p.name+' '+p.meta+' '+p.description).toLocaleLowerCase('ru').includes(query));const sort=$('#sort').value;if(sort==='price-asc')list.sort((a,b)=>a.price-b.price);if(sort==='price-desc')list.sort((a,b)=>b.price-a.price);if(sort==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'ru'));$('#result-status').hidden=!favoritesOnly&&!query;$('#result-status').textContent=(favoritesOnly?'Ваше избранное · ':'')+'Найдено: '+list.length;
  $('#products').innerHTML=list.length?list.map(p=>`<article class="product-card"><div class="product-photo"><button class="view-product" data-product="${p.id}" aria-label="Подробнее: ${p.name}"><img src="${asset(p)}" alt="${p.name}" loading="lazy" width="500" height="560"></button>${p.badge?`<span class="badge">${p.badge}</span>`:''}<button class="favorite ${favorites.includes(p.id)?'selected':''}" data-favorite="${p.id}" aria-label="${favorites.includes(p.id)?'Убрать из избранного':'В избранное'}: ${p.name}" aria-pressed="${favorites.includes(p.id)}"><svg><use href="#i-heart"/></svg></button></div><div class="product-info"><p class="product-meta">${p.meta}</p><h3><button class="product-name" data-product="${p.id}">${p.name}</button></h3><div class="product-bottom"><span class="product-price">${money(p.price)}</span><button class="add-to-cart" data-add="${p.id}" aria-label="Добавить в корзину: ${p.name}">+</button></div></div></article>`).join(''):`<div class="empty-products"><h3>${favoritesOnly?'Любимые вещи будут здесь':'Пока ничего не нашлось'}</h3><p>${favoritesOnly?'Нажмите на сердечко в карточке понравившегося товара.':'Попробуйте другое название или категорию.'}</p><button class="button dark" id="reset-catalog">Показать все вещи <span>↗</span></button></div>`;
+ revealElements($('#products'));
 }
 function resetCatalog(){filter='all';favoritesOnly=false;$('#search').value='';$('.search-row').hidden=true;setActiveFilter();updateCounts();renderProducts()}
 function setActiveFilter(){document.querySelectorAll('[data-filter]').forEach(b=>{const active=b.dataset.filter===filter;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))})}
@@ -43,4 +44,24 @@ $('#checkout').addEventListener('click',()=>{$('#info-title').textContent='Ую�
 $('#demo-info').addEventListener('click',()=>{$('#info-title').textContent='Магазин как идея';$('#info-content').innerHTML='<p>«место» — демонстрационный интерьерный магазин. Названия, цены и описания приведены для примера. Реальные заказы, доставка и оплата не подключены.</p><p>Главное интерьерное изображение создано с помощью Imagegen. Фото предметов использованы как иллюстрации концепта; характеристики демотоваров не являются предложением магазинов-источников.</p><div class="credit-links">Источники фото: <a href="https://baumhirsch.de/products/schwebendes-wandregal-aus-eichenholz-in-handarbeit" target="_blank" rel="noopener">BAUMHIRSCH</a>, <a href="https://modernlocke.com/products/19-real-touch-white-hydrangea-stem" target="_blank" rel="noopener">Modern Locke</a>, <a href="https://wurm.com/en/white-ceramic-vase-w-h-d-17x25x6cm-10036090" target="_blank" rel="noopener">Wurm</a>, <a href="https://www.adairs.com.au/homewares/cushions/home-republic/malmo-white-linen-cushion/" target="_blank" rel="noopener">Adairs</a>, <a href="https://www.cutmy.co.uk/shelves/floating/oak/" target="_blank" rel="noopener">Cut My</a>, <a href="https://quirkspace.co.za" target="_blank" rel="noopener">Quirk Space</a>, <a href="https://shop.mango.com" target="_blank" rel="noopener">Mango</a>, <a href="https://www.feltandfat.com/products/bud-vase-in-milk" target="_blank" rel="noopener">Felt+Fat</a>.</div>';openDialog('info-dialog')});
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}));
 window.addEventListener('storage',e=>{if(e.key==='mesto-cart-v1'||e.key==='mesto-favorites-v1'){cart=readState('mesto-cart-v1',{});favorites=readState('mesto-favorites-v1',[]);updateCounts();renderProducts();renderCart()}});
-updateCounts();renderProducts();renderCart();
+const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
+const revealObserver=typeof IntersectionObserver==='function'?new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-revealed');revealObserver.unobserve(entry.target)}});
+},{threshold:0.1,rootMargin:'0px 0px -24px 0px'}):null;
+function revealElements(scope=document){
+ if(!revealObserver||motionPreference.matches)return;
+ const selectors='.strip,.section-heading,.catalog-bar,.product-card,.collection-image,.collection-copy,.philosophy>.eyebrow,.philosophy>h2,.philosophy>p:not(.eyebrow),.values>div,.footer-top';
+ scope.querySelectorAll(selectors).forEach(el=>{
+  if(el.classList.contains('scroll-reveal'))return;
+  el.classList.add('scroll-reveal');
+  if(el.classList.contains('product-card')){
+   const column=[...el.parentElement.children].indexOf(el)%(innerWidth<=650?2:4);
+   el.style.setProperty('--reveal-delay',`${column*65}ms`);
+  }
+  if(el.getBoundingClientRect().bottom<0)el.classList.add('is-revealed');
+  else revealObserver.observe(el);
+ });
+}
+document.addEventListener('focusin',e=>{const el=e.target.closest('.scroll-reveal');if(el){el.classList.add('is-revealed');revealObserver?.unobserve(el)}});
+motionPreference.addEventListener('change',e=>{if(e.matches){revealObserver?.disconnect();document.querySelectorAll('.scroll-reveal').forEach(el=>el.classList.add('is-revealed'))}});
+updateCounts();renderProducts();renderCart();revealElements();
